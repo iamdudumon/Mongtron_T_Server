@@ -1,5 +1,7 @@
 const db = require("../util/db");
 
+const bcrypt = require("bcrypt");
+
 async function getEmail(email) {
   const sql = "select count(*) count from user where email = ?";
   const result = await db.query(sql, [email]);
@@ -12,4 +14,12 @@ async function getEmail(email) {
   }
 }
 
-module.exports = { getEmail };
+async function getUser(email, password) {
+  const sql =
+    "select id, email, password, nickname, age, sex, user.nationality, embassyNum from user RIGHT OUTER JOIN nationality ON user.nationality = nationality.nationality where email = ?";
+  const user = await db.query(sql, [email]);
+
+  return user;
+}
+
+module.exports = { getEmail, getUser };
