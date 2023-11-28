@@ -1,7 +1,5 @@
 const db = require("../util/db");
 
-const bcrypt = require("bcrypt");
-
 async function getEmail(email) {
   const sql = "select count(*) count from user where email = ?";
   const result = await db.query(sql, [email]);
