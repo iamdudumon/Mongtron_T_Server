@@ -28,4 +28,12 @@ router.post("/login", async function (req, res, next) {
   }
 });
 
+router.get("/nickname/:nickname", async function (req, res, next) {
+  const nickname = req.params.nickname;
+  const nicknameExist = await User.checkEmail(nickname);
+
+  if (nicknameExist) res.sendStatus(409);
+  else res.sendStatus(200);
+});
+
 module.exports = router;
