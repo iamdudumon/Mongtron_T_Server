@@ -23,7 +23,8 @@ router.post("/login", async function (req, res, next) {
   if (user == [] || !bcrypt.compareSync(password, user[0].password)) {
     res.sendStatus(401);
   } else {
-    res.status(200).json(user);
+    delete user[0].password;
+    res.status(200).json(user[0]);
   }
 });
 
