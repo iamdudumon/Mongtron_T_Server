@@ -1,6 +1,6 @@
 const db = require("../util/db");
 
-async function getEmail(email) {
+async function checkEmail(email) {
   const sql = "select count(*) count from user where email = ?";
   const result = await db.query(sql, [email]);
 
@@ -20,4 +20,4 @@ async function getUser(email, password) {
   return user;
 }
 
-module.exports = { getEmail, getUser };
+module.exports = { checkEmail, getUser };

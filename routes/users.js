@@ -7,7 +7,7 @@ const User = require("../model/User");
 /* GET users listing. */
 router.get("/email/:email", async function (req, res, next) {
   const email = req.params.email;
-  const emailExist = await User.getEmail(email);
+  const emailExist = await User.checkEmail(email);
 
   if (emailExist) res.sendStatus(409);
   else res.sendStatus(200);
