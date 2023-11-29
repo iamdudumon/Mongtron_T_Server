@@ -36,4 +36,29 @@ router.get("/nickname/:nickname", async function (req, res, next) {
   else res.sendStatus(200);
 });
 
+router.post("/register", async function (req, res, nexet) {
+  const email = req.body.email;
+  const password = req.body.password;
+  const nickname = req.body.nickname;
+  const age = req.body.age;
+  const sex =
+    req.body.sex == "0" ? null : req.body.sex == "1" ? "male" : "female"; //성별을 입력 안 하면 null
+  const nationality = req.body.nationality;
+
+  //비밀번호 hashing
+  const hashedPassword = bcrypt.hashSync(password, 10);
+
+  const result = await User.insertUser(
+    email,
+    hashedPassword,
+    nickname,
+    age,
+    sex,
+    nationality
+  );
+
+  if (result) res.sendStatus(200);
+  else res.sendStatus(409);
+});
+
 module.exports = router;
