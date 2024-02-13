@@ -1,7 +1,7 @@
 var express = require("express");
 var router = express.Router();
 
-const User = require("../model/User");
+const User = require("../service/User");
 
 router.patch("/", async (req, res, next) => {
   const id = req.body.id;
@@ -19,3 +19,5 @@ router.patch("/", async (req, res, next) => {
   if (result) res.sendStatus(200);
   else res.sendStatus(503);
 });
+
+module.exports = router;

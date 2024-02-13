@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 const bcrypt = require("bcrypt");
 
-const User = require("../model/User");
+const User = require("../service/User");
 
 /* GET users listing. */
 router.get("/email/:email", async function (req, res, next) {
