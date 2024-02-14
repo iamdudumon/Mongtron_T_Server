@@ -59,21 +59,9 @@ async function insertUser(
   }
 }
 
-async function updateGpsCoordinate(id, latitude, longitude) {
-  const sql = "update user set latitude =? , longitude = ? where id = ?";
-
-  try {
-    await db.query(sql, [id, latitude, longitude]);
-    return true;
-  } catch {
-    return false;
-  }
-}
-
 module.exports = {
   checkEmail,
   getUser,
   checkNickname,
   insertUser,
-  updateGpsCoordinate,
 };
