@@ -27,13 +27,13 @@ router.get("/position", async (req, res, next) => {
   const lon = req.query.longitude;
   const radiusInfo = req.query.radiusInfo;
 
-  const others = await Gps.getNearbyUsersLocation(id, lat, lon, radiusInfo);
-
   if (lat == undefined || lon == undefined || radiusInfo == undefined) {
     res.sendStatus(400);
   }
 
+  const others = await Gps.getNearbyUsersLocation(id, lat, lon, radiusInfo);
   let list = [];
+
   others.forEach((row) => {
     let response = new Object();
     response.id = row.id;
