@@ -22,8 +22,13 @@ async function getNearbyUsersLocation(id, lat, lon, radiusInfo) {
     ")) AS distance " +
     "from user where gpsState = '1' and not id = ? having distance < ?";
 
-  const others = await db.query(sql, [lat, lon, lat, id, radiusInfo]);
-  return others;
+  try {
+    const others = await db.query(sql, [lat, lon, lat, id, radiusInfo]);
+    return others;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
 }
 
 async function updateGpsState(id, gpsState) {

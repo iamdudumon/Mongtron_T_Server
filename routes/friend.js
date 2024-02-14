@@ -38,8 +38,7 @@ router.get("/list", async (req, res, next) => {
         distance: row.gpsState === "1" ? row.distance : -1.0,
       })),
     });
-  }
-  return res.sendStatus(400);
+  } else res.sendStatus(400);
 });
 
 module.exports = router;

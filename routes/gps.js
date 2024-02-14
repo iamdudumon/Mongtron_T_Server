@@ -32,8 +32,9 @@ router.get("/position", async (req, res, next) => {
   }
 
   const others = await Gps.getNearbyUsersLocation(id, lat, lon, radiusInfo);
-  let list = [];
+  if (!others) res.sendStatus(400);
 
+  let list = [];
   others.forEach((row) => {
     let response = new Object();
     response.id = row.id;
