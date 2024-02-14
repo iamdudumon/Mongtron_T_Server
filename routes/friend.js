@@ -20,8 +20,26 @@ router.delete("/", async (req, res, next) => {
   else res.sendStatus(400);
 });
 
-router.get("/", async (req, res, next) => {
+router.get("/list", async (req, res, next) => {
   const { id, latitude, longitude } = req.query;
+
+  if (latitude == undefined || longitude == undefined) {
+    res.sendStatus(400);
+  }
+
+  const friendList = await Friend.getFriendList(id, latitude, longitude);
+  if (friendList) {
+    return res.status(200).json({
+      addedFriendVOList: friendList.map((row) => ({
+        friendId: row.id,
+        friendNickName: row.nickName,
+        friendSex: row.sex === "male" ? "1" : "2",
+        friendGpsState: row.gpsState === "1",
+        distance: row.gpsState === "1" ? row.distance : -1.0,
+      })),
+    });
+  }
+  return res.sendStatus(400);
 });
 
 module.exports = router;

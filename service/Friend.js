@@ -24,7 +24,22 @@ async function deleteFrined(myId, friendId) {
   }
 }
 
+async function getFriendList(id, latitude, longitude) {
+  const sql =
+    "select id, nickName, sex, gpsState, " +
+    "(6371 * acos(cos(radians(?)) * cos(radians(latitude)) * cos(radians(longitude) - radians(?)) + sin(radians(?)) * sin(radians(latitude)))) AS distance " +
+    "from user where id in (select post_id from friend where pre_id = ?);";
+  try {
+    const friendList = await db.query(sql, [latitude, longitude, latitude, id]);
+    return friendList;
+  } catch (error) {
+    console.lop(error);
+    return false;
+  }
+}
+
 module.exports = {
   insertFriend,
   deleteFrined,
+  getFriendList,
 };
