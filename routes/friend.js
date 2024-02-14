@@ -8,7 +8,20 @@ router.post("/", async (req, res, next) => {
   const result = await Friend.insertFriend(my_id, friend_id);
 
   if (result) res.sendStatus(200);
-  else res.sendStatus(409);
+  else res.sendStatus(400);
+});
+
+router.delete("/", async (req, res, next) => {
+  const { my_id, friend_id } = req.query;
+
+  const result = await Friend.deleteFrined(my_id, friend_id);
+
+  if (result) res.sendStatus(200);
+  else res.sendStatus(400);
+});
+
+router.get("/", async (req, res, next) => {
+  const { id, latitude, longitude } = req.query;
 });
 
 module.exports = router;
