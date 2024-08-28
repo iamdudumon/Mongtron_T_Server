@@ -4,7 +4,7 @@ const mysql = {
 	user: "dudu",
 	password: "aa1541",
 	database: "mongtron",
-	connectionLimit: 5,
+	connectionLimit: 16,
 };
 
 module.exports = { mysql };
