@@ -45,7 +45,7 @@ router.get("/position", async (req, res, next) => {
 		response.nickName = row.nickName;
 		response.age = row.age;
 		response.sex = row.sex == "male" ? "1" : "2";
-		response.gpsState = row.gpsState == "1" ? true : false;
+		response.gpsState = row.gpsState == "Y" ? true : false;
 		response.latitude = row.latitude;
 		response.longitude = row.longitude;
 		response.distance = row.distance;
@@ -57,7 +57,7 @@ router.get("/position", async (req, res, next) => {
 
 router.patch("/state/:id", async (req, res) => {
 	const id = req.params.id;
-	const gpsState = req.body.gpsState == "true" ? "1" : "0";
+	const gpsState = req.body.gpsState == "true" ? "Y" : "N";
 
 	const result = await Gps.updateGpsState(id, gpsState);
 
