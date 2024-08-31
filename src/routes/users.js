@@ -5,11 +5,11 @@ const bcrypt = require("bcrypt");
 const User = require("../repositories/User");
 
 /* GET users listing. */
-router.get("/email/:email", async function (req, res, next) {
+router.get("/email-validations/:email", async function (req, res, next) {
 	const email = req.params.email;
-	const emailExist = await User.checkEmail(email);
+	const userExist = await User.getUserCountByEmail(email);
 
-	if (emailExist) res.sendStatus(409);
+	if (userExist) res.sendStatus(409);
 	else res.sendStatus(200);
 });
 
@@ -17,7 +17,7 @@ router.post("/login", async function (req, res, next) {
 	const email = req.body.email;
 	const password = req.body.password;
 
-	const user = await User.getUser(email, password);
+	const user = await User.getUserByEmail(email, password);
 
 	// email이 틀리거나, 비밀번호가 틀릴 시
 	if (user == [] || !bcrypt.compareSync(password, user[0].password)) {
@@ -28,11 +28,11 @@ router.post("/login", async function (req, res, next) {
 	}
 });
 
-router.get("/nickname/:nickname", async function (req, res, next) {
+router.get("/nickname-validations/:nickname", async function (req, res, next) {
 	const nickname = req.params.nickname;
-	const nicknameExist = await User.checkEmail(nickname);
+	const userExist = await User.getUserCountByNickname(nickname);
 
-	if (nicknameExist) res.sendStatus(409);
+	if (userExist) res.sendStatus(409);
 	else res.sendStatus(200);
 });
 
