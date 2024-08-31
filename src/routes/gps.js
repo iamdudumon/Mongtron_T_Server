@@ -1,8 +1,8 @@
 var express = require("express");
 var router = express.Router();
 
-const User = require("../service/User");
-const Gps = require("../service/Gps");
+const User = require("../repositories/User");
+const Gps = require("../repositories/Gps");
 
 router.patch("/:id", async (req, res, next) => {
 	const id = req.params.id;

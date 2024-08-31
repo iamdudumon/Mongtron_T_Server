@@ -1,4 +1,4 @@
-const db = require("../util/db");
+const db = require("../utils/db");
 
 async function updateGpsCoordinate(id, latitude, longitude) {
 	const sql = `UPDATE user SET latitude =? , longitude = ? WHERE id = ?`;
