@@ -1,6 +1,6 @@
 const db = require("../utils/db");
 
-async function updateGpsCoordinate(id, latitude, longitude) {
+async function updateLocationCoordinate(id, latitude, longitude) {
 	const sql = `UPDATE user SET latitude =? , longitude = ? WHERE id = ?`;
 	// const sql = "update user set location = POINT(?, ?) where id = ?";
 
@@ -15,7 +15,7 @@ async function updateGpsCoordinate(id, latitude, longitude) {
 async function getNearbyUsersLocation(id, lat, lon, radiusInfo) {
 	const sql = `
 							SELECT	
-									id, nickName, age, sex, gpsState, latitude, longitude, 
+									id, nickName, age, if(sex = '남성', '1', '2') as sex, gpsState, latitude, longitude, 
 									(6371 * acos(cos(radians(?)) * cos(radians(latitude)) * cos(radians(longitude) - radians(?)) + sin(radians(?)) * sin(radians(latitude)))) 
 									AS distance 
 							FROM 
@@ -60,7 +60,7 @@ async function getNearbyUsersLocation(id, lat, lon, radiusInfo) {
 	// 						`;
 
 	try {
-		const others = await db.query(sql, [
+		const result = await db.query(sql, [
 			lat,
 			lon,
 			lat,
@@ -85,14 +85,14 @@ async function getNearbyUsersLocation(id, lat, lon, radiusInfo) {
 		// 	lat,
 		// 	radiusInfo * 1000,
 		// ]);
-		return others;
+		return result;
 	} catch (error) {
 		console.error(error);
 		return false;
 	}
 }
 
-async function updateGpsState(id, gpsState) {
+async function updateLocationState(id, gpsState) {
 	const sql = `UPDATE user SET gpsState = ? WHERE id = ?`;
 
 	try {
@@ -104,7 +104,7 @@ async function updateGpsState(id, gpsState) {
 }
 
 module.exports = {
-	updateGpsCoordinate,
+	updateLocationCoordinate,
 	getNearbyUsersLocation,
-	updateGpsState,
+	updateLocationState,
 };
